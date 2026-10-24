@@ -87,16 +87,11 @@ Al aplicar **Retopology**, 3ds Max dio un error porque el modelo tenía vértice
 
 ## Contenido del repositorio
 
-- `practica_RVAV_Olaia_Picabea.max`: escena de 3ds Max con los cinco modelos del proceso:
-  - `Modelo_Original`: modelo *high poly* original.
-  - `Modelo_Original001`: copia del original usada como fuente del bake.
-  - `Retopologia_Automatica`: resultado de ProOptimizer.
-  - `Retopologia_Semiautomatica`: resultado de Retopology.
-  - `Bake_To_Texture`: modelo final *low poly* con las texturas bakeadas.
-- `FBX/practica_RVAV_Olaia_Picabea.fbx`: modelo final exportado con las texturas incrustadas.
-- `textures/`: mapas Beauty y Normal generados en el bake (512 × 512).
-- `documentacion_Olaia_Picabea.pdf`: documentación paso a paso de la práctica.
-- `docs/img/`: imágenes de este README, extraídas de la documentación.
+- `practica_RVAV_Olaia_Picabea.max`: archivo principal de 3ds Max con el proyecto desarrollado.
+- `practica_RVAV_Olaia_Picabea.zip`: proyecto comprimido de 3ds Max, incluido para facilitar la apertura del proyecto y evitar posibles problemas con las rutas absolutas de las texturas.
+- `FBX/`: carpeta que contiene el modelo exportado en formato FBX, con las texturas incrustadas (*baked textures*).
+- `textures/`: carpeta con los archivos `.jpg` correspondientes a las texturas generadas durante el proceso.
+- `documentacion_Olaia_Picabea.pdf`: documentación explicativa con el procedimiento seguido durante la práctica, detallado paso a paso.
 
 ## Lo que he aprendido
 
