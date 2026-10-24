@@ -1,7 +1,3 @@
-VIDEO
-
-https://youtu.be/Bo4WJFE8wgI
-
 # Optimización, bakeado y exportación de un modelo 3D
 
 > Práctica de la asignatura **Realidad Virtual Avanzada**
