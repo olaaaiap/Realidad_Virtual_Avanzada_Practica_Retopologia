@@ -1,15 +1,15 @@
-# Optimización, bakeado y exportación de un modelo 3D
+# Realidad Virtual Avanzada - Optimización, bakeado y exportación de un modelo 3D
 
-> Práctica de la asignatura **Realidad Virtual Avanzada**
-> Autora: **Olaia Picabea Sainz** · Herramienta: **Autodesk 3ds Max**
+**Conversión de un modelo 3D *high poly* generado con IA en un modelo *low poly* listo para tiempo real, con retopología, mapeado UV y *bake to texture* en Autodesk 3ds Max.**
 
-En esta práctica partí de un modelo *high poly* generado con IA y lo convertí en un modelo *low poly* listo para tiempo real. El proceso tiene tres partes: retopología (automática y semiautomática), mapeado de coordenadas UV y *bake to texture* de los mapas de color y normales.
-
-📄 [Leer la documentación completa (PDF)](documentacion_Olaia_Picabea.pdf)
+Es una práctica de la asignatura de Realidad Virtual Avanzada del máster. Partí de un modelo *high poly* generado con IA y lo convertí en un modelo *low poly* listo para tiempo real. El proceso tiene tres partes: retopología (automática y semiautomática), mapeado de coordenadas UV y *bake to texture* de los mapas de color y normales.
 
 ![Viewport con el proceso de optimización (izquierda) y bake to texture (derecha)](docs/img/viewport.png)
 
----
+## Enlaces
+
+- 📄 **Documentación completa:** [documentacion_Olaia_Picabea.pdf](documentacion_Olaia_Picabea.pdf)
+- 📦 **Modelo exportado en FBX:** [`FBX/`](FBX)
 
 ## Resultados
 
@@ -26,7 +26,18 @@ Es decir, el modelo final tiene **un 77 % menos de caras** y mantiene el aspecto
 |---|---|
 | ![Modelo original high poly](docs/img/modelo_original.png) | ![Resultado del bakeado sobre el modelo optimizado](docs/img/resultado_bake.png) |
 
-## 1. Modelo 3D
+## Proceso
+
+| Fase | Qué se hace | Herramientas de 3ds Max |
+|---|---|---|
+| **1. Modelo 3D** | Generar el modelo con IA y prepararlo en 3ds Max | Reset XForm, Editable Poly |
+| **2. Optimización** | Reducir las caras con dos técnicas de retopología | ProOptimizer, Weld, Subdivide, Retopology |
+| **3. Mapeado UV** | Generar las coordenadas UV del modelo optimizado | Unwrap UVW, Flatten Mapping |
+| **4. Bake to Texture** | Transferir el color y el detalle del original al modelo optimizado | Bake To Texture, material PBR, Arnold Light |
+
+## Detalle de cada fase
+
+### 1. Modelo 3D
 
 Generé el modelo con **Meshy**, una herramienta de IA. Le pedí una varita de estilo medieval, de madera, con una estrella en la parte superior. A propósito, le pedí que tanto la geometría como las texturas fueran complejas, para que la mejora de la retopología se notara sin perder calidad.
 
@@ -37,17 +48,17 @@ Después lo preparé en 3ds Max:
 - Apliqué **Reset XForm** para ajustar la escala a las unidades del viewport.
 - Convertí el *Editable Mesh* en *Editable Poly*.
 
-## 2. Optimización (retopología)
+### 2. Optimización (retopología)
 
 Antes de empezar comprobé que las caras del modelo estaban conectadas. Después hice dos copias del original, una para cada técnica.
 
-### Retopología automática
+#### Retopología automática
 
 Apliqué el modificador **ProOptimizer** con *Keep Textures* activado y fui bajando el *Optimization Level* hasta quedarme con el **39,5 % de los vértices**. El resultado fue un modelo de **34.042 caras**.
 
 ![Propiedades del modelo con retopología automática](docs/img/retopologia_automatica.png)
 
-### Retopología semiautomática
+#### Retopología semiautomática
 
 Al aplicar **Retopology**, 3ds Max dio un error porque el modelo tenía vértices duplicados. Lo resolví así:
 
@@ -59,7 +70,7 @@ Al aplicar **Retopology**, 3ds Max dio un error porque el modelo tenía vértice
 |---|---|
 | ![Malla con retopología semiautomática](docs/img/retopologia_semiautomatica.png) | ![Propiedades del modelo con retopología semiautomática](docs/img/retopologia_semiautomatica_propiedades.png) |
 
-## 3. Mapeado de coordenadas UV
+### 3. Mapeado de coordenadas UV
 
 - Copié el modelo original y el optimizado para no modificar los originales.
 - Para distinguirlos, quité los materiales del optimizado y le apliqué un color liso.
@@ -68,7 +79,7 @@ Al aplicar **Retopology**, 3ds Max dio un error porque el modelo tenía vértice
 
 ![Editor de UVW con el resultado de Flatten Mapping](docs/img/unwrap_uvw.png)
 
-## 4. Bake to Texture
+### 4. Bake to Texture
 
 1. Con el modelo optimizado seleccionado, abrí **Rendering → Bake To Texture** y añadí los mapas **Beauty** y **Normal**.
 2. En *Projected From* enlacé el modelo original. El *cage* que se generó era demasiado grande, así que lo reseteé y aumenté ligeramente el *Push Amount*.
@@ -79,19 +90,11 @@ Al aplicar **Retopology**, 3ds Max dio un error porque el modelo tenía vértice
 
 **Problema encontrado.** El primer bakeado salió mal por falta de luz en la escena. Lo solucioné añadiendo una **Arnold Light de tipo Skydome** con intensidad 2 y repitiendo el proceso.
 
-### Texturas generadas
+#### Texturas generadas
 
 | Base color (Beauty) | Normal map |
 |---|---|
 | ![Textura Beauty bakeada](textures/Bake_To_Texture_V3_Beauty.png) | ![Normal map bakeado](textures/Bake_To_Texture_V3_Normal.png) |
-
-## Contenido del repositorio
-
-- `practica_RVAV_Olaia_Picabea.max`: archivo principal de 3ds Max con el proyecto desarrollado.
-- `practica_RVAV_Olaia_Picabea.zip`: proyecto comprimido de 3ds Max, incluido para facilitar la apertura del proyecto y evitar posibles problemas con las rutas absolutas de las texturas.
-- `FBX/`: carpeta que contiene el modelo exportado en formato FBX, con las texturas incrustadas (*baked textures*).
-- `textures/`: carpeta con los archivos `.jpg` correspondientes a las texturas generadas durante el proceso.
-- `documentacion_Olaia_Picabea.pdf`: documentación explicativa con el procedimiento seguido durante la práctica, detallado paso a paso.
 
 ## Lo que he aprendido
 
@@ -99,3 +102,22 @@ Al aplicar **Retopology**, 3ds Max dio un error porque el modelo tenía vértice
 - Limpiar una malla generada por IA (vértices duplicados y aislados) antes de poder procesarla.
 - Generar UVs y transferir el detalle de un modelo *high poly* a uno *low poly* mediante mapas de color y normales.
 - Ajustar el *cage* de proyección y la iluminación de la escena para obtener un bake correcto.
+
+## Tecnologías
+
+- **Autodesk 3ds Max**: retopología, mapeado UV y *bake to texture*
+- **Arnold** para la iluminación del bakeado
+- **Meshy** para generar el modelo original con IA
+- **FBX** como formato de exportación
+
+## Contenido del repositorio
+
+- `practica_RVAV_Olaia_Picabea.max`: archivo principal de 3ds Max con el proyecto desarrollado.
+- `practica_RVAV_Olaia_Picabea.zip`: proyecto comprimido de 3ds Max, incluido para facilitar la apertura del proyecto y evitar posibles problemas con las rutas absolutas de las texturas.
+- [`FBX/`](FBX): carpeta que contiene el modelo exportado en formato FBX, con las texturas incrustadas (*baked textures*).
+- [`textures/`](textures): carpeta con los archivos correspondientes a las texturas generadas durante el proceso.
+- `documentacion_Olaia_Picabea.pdf`: documentación explicativa con el procedimiento seguido durante la práctica, detallado paso a paso.
+
+## Autora
+
+Olaia Picabea Sainz
